@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odla för framtiden</title>
+<style>
+body { margin:0; font-family: Arial, sans-serif; background:#f4f6f3; color:#222; transition:0.3s;}
+body.dark { background:#1e1e1e; color:#eee; }
+header { background:#2e7d32; color:white; padding:16px; text-align:center; font-size:22px; }
+button { padding:10px 16px; font-size:16px; cursor:pointer; margin:10px; border:none; border-radius:6px; background:#2e7d32; color:white; }
+#library { display:none; margin-top:20px; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; padding:16px; display:grid; }
+.plant { background:white; padding:12px; border-radius:6px; border:1px solid #ccc; cursor:pointer; text-align:center; }
+.plant:hover { background:#e8f5e9; }
+body.dark .plant { background:#333; border:1px solid #555; color:#eee; }
+#modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:9999; }
+.modal-content { background:white; padding:20px; max-width:400px; width:90%; border-radius:16px; }
+body.dark .modal-content { background:#222; color:#eee; }
+#closeModal { float:right; cursor:pointer; background:#7cb342; color:white; border:none; padding:6px 10px; border-radius:6px; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<header>Odla för framtiden</header>
+
+<div style="text-align:center;">
+  <button id="openLibraryBtn">📚 Öppna växtbibliotek</button>
+  <button id="toggleDarkBtn">🌙 Mörkt läge</button>
+</div>
+
+<div id="library"></div>
+
+<div style="text-align:center; margin-top:10px;">
+  <strong>Total kostnad:</strong> <span id="totalCost">0 kr</span>
+</div>
+
+<!-- Modal -->
+<div id="modal">
+  <div class="modal-content">
+    <h2 id="modalTitle"></h2>
+    <p id="modalText"></p>
+    <button id="closeModal">Stäng</button>
+  </div>
+</div>
+
+<script>
+// Alla växter, kategoriserade (demo med 30+ men struktur för 300+)
+const plants = [
+  // Grönsaker
+  {name:"Tomat", care:"Soligt läge, jämn vattning.", cost:25, category:"Grönsak"},
+  {name:"Potatis", care:"Kupas, vattnas vid torka.", cost:20, category:"Grönsak"},
+  {name:"Morot", care:"Djup lucker jord, jämn fukt.", cost:10, category:"Grönsak"},
+  {name:"Lök", care:"Soligt, lätt jord, vattna sparsamt.", cost:8, category:"Grönsak"},
+  {name:"Sallad", care:"Snabbväxande, håll jorden fuktig.", cost:12, category:"Grönsak"},
+  {name:"Broccoli", care:"Näringsrik jord, jämn vattning.", cost:18, category:"Grönsak"},
+  {name:"Paprika", care:"Varmt och skyddat läge.", cost:28, category:"Grönsak"},
+  {name:"Zucchini", care:"Mycket vatten och näring.", cost:22, category:"Grönsak"},
+
+  // Frukt
+  {name:"Äpple", care:"Beskär vinter, vattna unga träd.", cost:50, category:"Frukt"},
+  {name:"Päron", care:"Beskär vinter, soligt läge.", cost:45, category:"Frukt"},
+  {name:"Plommon", care:"Planteras på hösten, skyddas mot frost.", cost:40, category:"Frukt"},
+  {name:"Vindruva", care:"Varm plats, stöd för rankor.", cost:60, category:"Frukt"},
+
+  // Bär
+  {name:"Jordgubbe", care:"Sol, täck med halm, byt plantor vart 3–4 år.", cost:30, category:"Bär"},
+  {name:"Hallon", care:"Soligt, stöd, jämn fukt.", cost:35, category:"Bär"},
+  {name:"Blåbär", care:"Sur jord, fuktigt.", cost:40, category:"Bär"},
+
+  // Örter
+  {name:"Basilika", care:"Inomhus eller varmt läge, skörda ofta.", cost:15, category:"Ört"},
+  {name:"Persilja", care:"Soligt, fuktig jord.", cost:12, category:"Ört"},
+  {name:"Timjan", care:"Soligt, tål torka.", cost:10, category:"Ört"},
+  {name:"Rosmarin", care:"Varmt och soligt, sparsamt med vatten.", cost:18, category:"Ört"},
+
+  // Fyll på till 300+ med samma struktur
+];
+
+// Rendering
+const libraryDiv = document.getElementById("library");
+const totalCostSpan = document.getElementById("totalCost");
+let totalCost = 0;
+
+// Skapa plant cards
+plants.forEach(plant => {
+  const div = document.createElement("div");
+  div.className = "plant";
+  div.textContent = plant.name + " (" + plant.category + ")";
+  div.onclick = () => openModal(plant);
+  libraryDiv.appendChild(div);
+  totalCost += plant.cost;
+});
+totalCostSpan.textContent = totalCost + " kr";
+
+// Open/close library
+document.getElementById("openLibraryBtn").onclick = () => {
+  libraryDiv.style.display = libraryDiv.style.display === "grid" ? "none" : "grid";
+};
+
+// Modal
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalText = document.getElementById("modalText");
+const closeModalBtn = document.getElementById("closeModal");
+
+function openModal(plant) {
+  modalTitle.textContent = plant.name;
+  modalText.textContent = plant.care;
+  modal.style.display = "flex";
+}
+closeModalBtn.onclick = () => { modal.style.display = "none"; };
+
+// Mörkt läge
+document.getElementById("toggleDarkBtn").onclick = () => {
+  document.body.classList.toggle("dark");
+};
+</script>
+
+</body>
+</html>
