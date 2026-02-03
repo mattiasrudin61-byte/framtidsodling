@@ -44,7 +44,7 @@ body.dark .modal-content { background:#222; color:#eee; }
 </div>
 
 <script>
-// Alla växter, kategoriserade (demo med 30+ men struktur för 300+)
+// Struktur för alla växter (exempel med 30+ för demo, kopiera formatet till 300)
 const plants = [
   // Grönsaker
   {name:"Tomat", care:"Soligt läge, jämn vattning.", cost:25, category:"Grönsak"},
@@ -71,9 +71,8 @@ const plants = [
   {name:"Basilika", care:"Inomhus eller varmt läge, skörda ofta.", cost:15, category:"Ört"},
   {name:"Persilja", care:"Soligt, fuktig jord.", cost:12, category:"Ört"},
   {name:"Timjan", care:"Soligt, tål torka.", cost:10, category:"Ört"},
-  {name:"Rosmarin", care:"Varmt och soligt, sparsamt med vatten.", cost:18, category:"Ört"},
-
-  // Fyll på till 300+ med samma struktur
+  {name:"Rosmarin", care:"Varmt och soligt, sparsamt med vatten.", cost:18, category:"Ört"}
+  // Kopiera samma format för resten av 300 växter
 ];
 
 // Rendering
@@ -81,7 +80,6 @@ const libraryDiv = document.getElementById("library");
 const totalCostSpan = document.getElementById("totalCost");
 let totalCost = 0;
 
-// Skapa plant cards
 plants.forEach(plant => {
   const div = document.createElement("div");
   div.className = "plant";
